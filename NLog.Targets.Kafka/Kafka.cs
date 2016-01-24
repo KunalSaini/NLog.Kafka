@@ -10,6 +10,7 @@ namespace NLog.Targets
         {
             this.Host = "localhost";
         }
+
         protected override void Write(LogEventInfo logEvent)
         {
             var message = this.Layout.Render(logEvent);

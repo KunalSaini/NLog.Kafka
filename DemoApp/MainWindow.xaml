@@ -1,0 +1,15 @@
+﻿<Window x:Class="DemoApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Demo App - NLog Kafka Target" Height="212" Width="525">
+    <StackPanel>
+        <Button Name="Trace" Click="Button_Click">Trace</Button>
+        <Button Name="Debug" Click="Button_Click">Debug and Tag</Button>
+        <Button Name="Info" Click="Button_Click">Info and a Field</Button>
+        <Button Name="Info2" Click="Button_Click">Info and a 2 Fields</Button>
+        <Button Name="Warn" Click="Button_Click">Warn</Button>
+        <Button Name="Error" Click="Button_Click">Error</Button>
+        <Button Name="Fatal" Click="Button_Click">Fatal</Button>
+        <Button Name="ErrorWException" Click="Button_Click" Content="Error w/ Exception"></Button>
+    </StackPanel>
+</Window>
