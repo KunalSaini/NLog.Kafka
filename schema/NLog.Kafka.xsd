@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<schema id="NLog.RabbitMQ"
+		   targetNamespace="https://github.com/KunalSaini/NLog.Kafka/raw/master/src/schemas/NLog.RabbitMQ.xsd"
+		   xmlns="http://www.w3.org/2001/XMLSchema"
+		   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		   xmlns:mstns="https://github.com/KunalSaini/NLog.Kafka/raw/master/src/schemas/NLog.RabbitMQ.xsd"
+		   xmlns:nlog="http://www.nlog-project.org/schemas/NLog.xsd"
+		   elementFormDefault="qualified">
+  <import namespace="http://www.nlog-project.org/schemas/NLog.xsd" />
+  <complexType name="Kafka">
+    <annotation>
+      <documentation>
+        The Kafka target pushes log messages to a Kafka Queue instance. It's maintained
+        outside of the main NLog project at https://github.com/KunalSaini/NLog.Kafka. Please
+        report any problems to this address.
+      </documentation>
+    </annotation>
+    <complexContent>
+      <extension base="nlog:Target">
+        <choice minOccurs="0" maxOccurs="unbounded">
+          <element name="name" type="string" minOccurs="1" maxOccurs="1" nillable="false" />
+          <element name="hostname" type="string" minOccurs="1" maxOccurs="1" nillable="false" />
+          <element name="port" type="unsignedShort" minOccurs="0" maxOccurs="1" />
+          <element name="topic" type="string" minOccurs="0" maxOccurs="1" nillable="false" />
+          <element name="layout" type="nlog:Layout" minOccurs="0" maxOccurs="1" />
+          <element name="field" minOccurs="0" maxOccurs="unbounded">
+            <complexType>
+              <attribute name="name" type="string" use="required"/>
+              <attribute name="layout" type="nlog:Layout" use="required"/>
+            </complexType>
+          </element>
+        </choice>
+        <attribute name="layout" type="nlog:SimpleLayoutAttribute">
+          <annotation>
+            <documentation>Instance of  that is used to format log messages.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="name" type="string">
+          <annotation>
+            <documentation>Name of the target.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="username" type="string" default="guest">
+          <annotation>
+            <documentation>The username to use for authentication with the message broker. The default is 'guest'.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="password" type="string" default="guest">
+          <annotation>
+            <documentation>The password to use for authentication with the message broker. The default is 'guest'.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="hostname" type="string" default="localhost">
+          <annotation>
+            <documentation>The host name of the broker to log to. The default is 'localhost'</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="exchange" type="string" default="app-logging">
+          <annotation>
+            <documentation>The exchange to bind the logger output to.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="exchangetype" type="string" default="topic">
+          <annotation>
+            <documentation>The exchange type to bind to logger output to. This must be a supported topic type by RabbitMQ.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="port" type="unsignedShort" default="5672">
+          <annotation>
+            <documentation>The port to connect using. The default is '5672'.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="topic" type="string" default="{0}">
+          <annotation>
+            <documentation>The routing key (aka. topic) with which to send messages. Defaults to {0}, which in the end is 'error' for log.Error("..."), and so on. An example could be setting this property to 'ApplicationType.MyApp.Web.{0}'. The default is '{0}'.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="vhost" type="string" default="/">
+          <annotation>
+            <documentation>Use default row highlighting rules. Default value is: true</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="appid" type="string">
+          <annotation>
+            <documentation>The application id to specify when sending. Defaults to null, and then IBasicProperties.AppId will be the name of the logger instead.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="maxBuffer" type="integer" default="10240">
+          <annotation>
+            <documentation>The number of log messages to save if the RabbitMQ instance goes down. Defaults to 10240 messages.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="heartBeatSeconds" type="unsignedShort" default="3">
+          <annotation>
+            <documentation>The number seconds to wait between heartbeats.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="useJSON" type="boolean" default="false">
+          <annotation>
+            <documentation>Whether to publish the message as a JSON structure (recommended!). If true then the defined layout will not be used.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="useLayoutAsMessage" type="boolean" default="false">
+          <annotation>
+            <documentation>Using Layout for @message, when publish the message as a JSON structure. If false then the defined layout will not be used.</documentation>
+          </annotation>
+        </attribute>
+        <attribute name="compression" type="string" default="none">
+          <annotation>
+            <documentation>Compression type: none, gzip</documentation>
+          </annotation>
+        </attribute>
+      </extension>
+    </complexContent>
+  </complexType>
+</schema>

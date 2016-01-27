@@ -30,11 +30,6 @@ namespace NLog.Targets
         private KafkaClient _client;
         Object lockObj = new Object();
 
-        public Kafka()
-        {
-            //this.Host = "http://localhost/";
-        }
-        
         protected override void Write(LogEventInfo logEvent)
         {
             var message = this.Layout.Render(logEvent);
