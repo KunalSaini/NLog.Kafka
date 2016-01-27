@@ -1,4 +1,4 @@
-﻿<Window x:Class="DemoApp.MainWindow"
+﻿<Window x:Class="DemoApp.Producer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Demo App - NLog Kafka Target" Height="212" Width="525">

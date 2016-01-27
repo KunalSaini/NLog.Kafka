@@ -32,7 +32,7 @@ namespace NLog.Targets
 
         public Kafka()
         {
-            this.Host = "http://localhost/";
+            //this.Host = "http://localhost/";
         }
         
         protected override void Write(LogEventInfo logEvent)
@@ -44,6 +44,7 @@ namespace NLog.Targets
 
         private void SendMessageToQueue(string message)
         {
+            //client.Recieve();
             client.Post(message);
         }
 
@@ -51,11 +52,16 @@ namespace NLog.Targets
         {
             if (_client != null)
                 _client.Dispose();
-            //TODO: Close kafka client
             base.CloseTarget();
         }
 
         [RequiredParameter]
-        public string Host { get; set; }
+        public string host { get; set; }
+
+        [RequiredParameter]
+        public string port { get; set; }
+
+        [RequiredParameter]
+        public string topic { get; set; }
     }
 }
