@@ -2,6 +2,7 @@
 using NLog.Config;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NLog.Targets
 {
@@ -12,14 +13,16 @@ namespace NLog.Targets
         {
             get
             {
+                //TODO: Get rid of this ugliness
                 if (_client == null)
                 {
                     lock (lockObj)
                     {
                         if (_client == null)
                         {
-                            //TODO: Pass host URL from config
-                            _client = new KafkaClient();
+                            var addresses = from x in this.Brokers
+                                            select x.address;
+                            _client = new KafkaClient(this.topic, addresses.ToList());
                         }
                     }
                 }
@@ -39,7 +42,6 @@ namespace NLog.Targets
 
         private void SendMessageToQueue(string message)
         {
-            //client.Recieve();
             client.Post(message);
         }
 
@@ -50,13 +52,13 @@ namespace NLog.Targets
             base.CloseTarget();
         }
 
-        [RequiredParameter]
-        public string host { get; set; }
-
-        [RequiredParameter]
-        public string port { get; set; }
 
         [RequiredParameter]
         public string topic { get; set; }
+
+        [RequiredParameter]
+        [ArrayParameter(typeof(KafkaBroker), "broker")]
+        public IList<KafkaBroker> Brokers { get; private set; }
+
     }
 }

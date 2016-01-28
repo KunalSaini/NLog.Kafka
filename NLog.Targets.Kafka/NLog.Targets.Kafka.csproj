@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Kafka.cs" />
+    <Compile Include="KafkaBroker.cs" />
     <Compile Include="KafkaClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

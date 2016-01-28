@@ -13,7 +13,7 @@ namespace NLog.Targets
     {
         Producer _client;
         Consumer _consumer;
-        public KafkaClient(List<Uri> kafkaOptions)
+        public KafkaClient(string topic, List<Uri> kafkaOptions)
         {
             var options = new KafkaOptions(kafkaOptions.ToArray());
             var router = new BrokerRouter(options);
@@ -27,14 +27,6 @@ namespace NLog.Targets
             
         }
 
-        public KafkaClient()
-            : this(new List<Uri> { 
-                new Uri("http://10.96.23.75:9092"), 
-                new Uri("http://10.96.23.76:9092"),
-                new Uri("http://10.96.23.77:9092"),
-                new Uri("http://10.96.23.78:9092")})
-        { }
-
         public void Post(string message)
         {
             try
@@ -42,7 +34,6 @@ namespace NLog.Targets
                 var queueMessage = new Message(message, Guid.NewGuid().ToString());
                 var results = 
                     _client.SendMessageAsync("storm_trooper", new[] { queueMessage },1);
-                results.Wait();
                 //_client.BatchSize
             }
             catch (KafkaApplicationException ex)
@@ -57,6 +48,7 @@ namespace NLog.Targets
 
         public IEnumerable<string> Recieve()
         {
+            var result = _consumer.GetTopic("storm_trooper");
             foreach (var message in _consumer.Consume())
             {
                 yield return string.Format("Response: P{0},O{1} : {2}",
