@@ -4,9 +4,17 @@ using System;
 namespace NLog.Targets
 {
     [NLogConfigurationItem]
-    [ThreadAgnostic]
     public class KafkaBroker
     {
-        public Uri address { get; set; }
+        public KafkaBroker()
+        {
+            this.address = string.Empty;
+        }
+        public KafkaBroker(string address)
+        {
+            this.address = address;
+        }
+        [RequiredParameter]
+        public string address { get; private set; }
     }
 }

@@ -20,8 +20,8 @@ namespace NLog.Targets
                     {
                         if (_client == null)
                         {
-                            var addresses = from x in this.Brokers
-                                            select x.address;
+                            var addresses = from x in this.brokers
+                                            select new Uri(x.address);
                             _client = new KafkaClient(this.topic, addresses.ToList());
                         }
                     }
@@ -58,7 +58,7 @@ namespace NLog.Targets
 
         [RequiredParameter]
         [ArrayParameter(typeof(KafkaBroker), "broker")]
-        public IList<KafkaBroker> Brokers { get; private set; }
+        public IList<KafkaBroker> brokers { get; private set; }
 
     }
 }
