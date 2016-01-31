@@ -32,7 +32,10 @@ namespace NLog.Targets
 
         private KafkaClient _client;
         Object lockObj = new Object();
-
+        public Kafka()
+        {
+            brokers = new List<KafkaBroker>();
+        }
         protected override void Write(LogEventInfo logEvent)
         {
             var message = this.Layout.Render(logEvent);
@@ -56,9 +59,9 @@ namespace NLog.Targets
         [RequiredParameter]
         public string topic { get; set; }
 
-        [RequiredParameter]
+        //[RequiredParameter]
         [ArrayParameter(typeof(KafkaBroker), "broker")]
-        public IList<KafkaBroker> brokers { get; private set; }
+        public IList<KafkaBroker> brokers { get; set; }
 
     }
 }

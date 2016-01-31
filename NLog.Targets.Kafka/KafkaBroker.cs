@@ -15,6 +15,6 @@ namespace NLog.Targets
             this.address = address;
         }
         [RequiredParameter]
-        public string address { get; private set; }
+        public string address { get; set; }
     }
 }
