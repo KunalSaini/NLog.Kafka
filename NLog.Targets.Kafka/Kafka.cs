@@ -1,37 +1,15 @@
-﻿using NLog.Common;
+﻿using KafkaNet;
+using KafkaNet.Protocol;
+using NLog.Common;
 using NLog.Config;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NLog.Targets
 {
     [Target("Kafka")]
     public class Kafka : TargetWithLayout
     {
-        protected KafkaClient client
-        {
-            get
-            {
-                //TODO: Get rid of this ugliness
-                if (_client == null)
-                {
-                    lock (lockObj)
-                    {
-                        if (_client == null)
-                        {
-                            var addresses = from x in this.brokers
-                                            select new Uri(x.address);
-                            _client = new KafkaClient(this.topic, addresses.ToList());
-                        }
-                    }
-                }
-                return _client;
-            }
-        }
-
-        private KafkaClient _client;
-        Object lockObj = new Object();
         public Kafka()
         {
             brokers = new List<KafkaBroker>();
@@ -45,13 +23,20 @@ namespace NLog.Targets
 
         private void SendMessageToQueue(string message)
         {
-            client.Post(message);
+            try
+            {
+                var queueMessage = new Message(message);
+                this.GetProducer().SendMessageAsync(topic, new[] { queueMessage }, 1);
+            }
+            catch (Exception ex)
+            {
+                InternalLogger.Error("Unable to send message to kafka queue", ex);
+            }
         }
 
         protected override void CloseTarget()
         {
-            if (_client != null)
-                _client.Dispose();
+            KafkaConnectionHelper.CloseProducer();
             base.CloseTarget();
         }
 
@@ -59,7 +44,7 @@ namespace NLog.Targets
         [RequiredParameter]
         public string topic { get; set; }
 
-        //[RequiredParameter]
+        [RequiredParameter]
         [ArrayParameter(typeof(KafkaBroker), "broker")]
         public IList<KafkaBroker> brokers { get; set; }
 

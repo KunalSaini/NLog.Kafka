@@ -1,46 +1,31 @@
 ﻿using KafkaNet;
 using KafkaNet.Model;
-using KafkaNet.Protocol;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NLog.Targets
 {
-    public class KafkaClient : IDisposable
+    public static class KafkaConnectionHelper
     {
-        Producer _client;
-        string _topic;
-        public KafkaClient(string topic, List<Uri> kafkaOptions)
+        static Producer _producer = null;
+
+        public static Producer GetProducer(this Kafka kafkaObj)
         {
-            _topic = topic;
-            var options = new KafkaOptions(kafkaOptions.ToArray());
-            var router = new BrokerRouter(options);
-            _client = new Producer(router);
+            if (_producer == null)
+            {
+                var addresses = from x in kafkaObj.brokers
+                                select new Uri(x.address);
+                var router = new BrokerRouter(new KafkaOptions(addresses.ToArray()));
+                _producer = new Producer(router);
+            }
+            return _producer;
         }
 
-        public void Post(string message)
+        public static void CloseProducer()
         {
-            try
-            {
-                var queueMessage = new Message(message, Guid.NewGuid().ToString());
-                var results =
-                    _client.SendMessageAsync(_topic, new[] { queueMessage }, 1);
-            }
-            catch (KafkaApplicationException ex)
-            {
-                var strErrorMessage = ex.Message;
-            }
-            catch(Exception ex)
-            {
-                var m = ex.Message;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (_client != null)
-                _client.Dispose();
+            if (_producer != null)
+                _producer.Dispose();
+            _producer = null;
         }
     }
 }
