@@ -1,11 +1,14 @@
 version: 1.0.{build}
+# build Configuration, i.e. Debug, Release, etc.
+configuration: Release
+
 before_build:
 - cmd: nuget restore
 build:
   project: NLog.Kafka.sln
-  publish_nuget: true
-  publish_nuget_symbols: true
-  include_nuget_references: true
+  publish_nuget: false
+  publish_nuget_symbols: false
+  include_nuget_references: false
   verbosity: normal
 after_build:
 - nuget pack NLog.Kafka\NLog.Targets.Kafka.csproj 
