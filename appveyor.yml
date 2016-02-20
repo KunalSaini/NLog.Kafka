@@ -1,0 +1,12 @@
+version: 1.0.{build}
+before_build:
+- cmd: nuget restore
+build:
+  project: NLog.Kafka.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+  verbosity: normal
+after_build:
+- nuget pack NLog.Kafka\NLog.Targets.Kafka.csproj 
+- appveyor PushArtifact *.nupkg
