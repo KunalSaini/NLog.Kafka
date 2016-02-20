@@ -11,5 +11,5 @@ build:
   include_nuget_references: false
   verbosity: normal
 after_build:
-- nuget pack NLog.Kafka\NLog.Targets.Kafka.csproj 
+- nuget pack NLog.Targets.Kafka\NLog.Targets.Kafka.csproj 
 - appveyor PushArtifact *.nupkg
