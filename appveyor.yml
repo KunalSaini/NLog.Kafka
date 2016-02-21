@@ -24,3 +24,6 @@ deploy:
     secure: exO8//WMx3fyPkwcZWlWHgjm5LdXUyoJUpWAyZgXSrijY8B+w/aRsSsJfHr8BAPy
   skip_symbols: true
   artifact: mypackage
+  on:
+    branch: master
+    appveyor_repo_tag: true
