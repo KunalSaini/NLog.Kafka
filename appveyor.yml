@@ -16,7 +16,7 @@ after_build:
 artifacts:
   # pushing all *.nupkg files in directory
   - path: '**/NLog.Targets.Kafka.*.nupkg'
-  - name: mypackage
+  name: mypackage
   
 deploy:
   provider: NuGet
