@@ -15,11 +15,11 @@ after_build:
 
 artifacts:
   # pushing all *.nupkg files in directory
-  - path: '.\*.nupkg'
+  - path: '.\NLog.Targets.Kafka\*.nupkg'
   
 deploy:
   provider: NuGet
   api_key:
     secure: exO8//WMx3fyPkwcZWlWHgjm5LdXUyoJUpWAyZgXSrijY8B+w/aRsSsJfHr8BAPy
   skip_symbols: true
-  artifact: NLog.Targets.Kafka\*.nupkg
+  artifact: '*.nupkg'
