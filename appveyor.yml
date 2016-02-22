@@ -6,8 +6,6 @@ branches:
     
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
-# build platform, i.e. x86, x64, Any CPU. This setting is optional.
-platform: Any CPU
 
 before_build:
 - cmd: nuget restore
@@ -16,7 +14,7 @@ build:
   publish_nuget: false
   publish_nuget_symbols: false
   include_nuget_references: false
-  verbosity: detailed
+  verbosity: normal
 after_build:
 - nuget pack NLog.Targets.Kafka\NLog.Targets.Kafka.csproj 
 
