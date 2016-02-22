@@ -1,6 +1,13 @@
 version: 1.0.{build}
+
+branches:
+  only:
+    - master
+    
 # build Configuration, i.e. Debug, Release, etc.
 configuration: Release
+# build platform, i.e. x86, x64, Any CPU. This setting is optional.
+platform: Any CPU
 
 before_build:
 - cmd: nuget restore
@@ -9,7 +16,7 @@ build:
   publish_nuget: false
   publish_nuget_symbols: false
   include_nuget_references: false
-  verbosity: normal
+  verbosity: detailed
 after_build:
 - nuget pack NLog.Targets.Kafka\NLog.Targets.Kafka.csproj 
 
@@ -25,5 +32,4 @@ deploy:
   skip_symbols: true
   artifact: mypackage
   on:
-    branch: master
     appveyor_repo_tag: true
