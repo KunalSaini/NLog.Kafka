@@ -16,7 +16,7 @@ build:
   publish_nuget: false
   publish_nuget_symbols: false
   include_nuget_references: false
-  verbosity: detailed
+  verbosity: normal
 after_build:
 - nuget pack NLog.Targets.Kafka\NLog.Targets.Kafka.csproj 
 
