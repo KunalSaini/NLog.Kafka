@@ -9,6 +9,7 @@
     <projectUrl>https://github.com/KunalSaini/NLog.Kafka</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
+	<licenseUrl>https://raw.githubusercontent.com/KunalSaini/NLog.Kafka/master/LICENSE.md</licenseUrl>
     <releaseNotes>Pre release</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>NLog Kafka Target Message</tags>
