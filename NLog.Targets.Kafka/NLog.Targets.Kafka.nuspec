@@ -9,8 +9,9 @@
     <projectUrl>https://github.com/KunalSaini/NLog.Kafka</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-	<licenseUrl>https://raw.githubusercontent.com/KunalSaini/NLog.Kafka/master/LICENSE.md</licenseUrl>
-    <releaseNotes>Pre release</releaseNotes>
+    <licenseUrl>https://raw.githubusercontent.com/KunalSaini/NLog.Kafka/master/LICENSE.md</licenseUrl>
+    <iconUrl>https://github.com/KunalSaini/NLog.Kafka/raw/master/Images/Icon.png</iconUrl>
+    <releaseNotes>Publish log information to kafka queue</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>NLog Kafka Target Message</tags>
   </metadata>
