@@ -15,6 +15,13 @@ build:
   publish_nuget_symbols: false
   include_nuget_references: false
   verbosity: normal
+build:
+  project: DemoApp\DemoApp.sln
+  publish_nuget: false
+  publish_nuget_symbols: false
+  include_nuget_references: false
+  verbosity: normal
+  
 after_build:
 - nuget pack NLog.Targets.Kafka\NLog.Targets.Kafka.csproj 
 
