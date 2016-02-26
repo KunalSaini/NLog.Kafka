@@ -2,6 +2,7 @@
 using KafkaNet.Model;
 using KafkaNet.Protocol;
 using System;
+using System.Configuration;
 using System.Linq;
 
 namespace DemoApp.Consumer
@@ -14,14 +15,11 @@ namespace DemoApp.Consumer
         {
             try
             {
-                Console.WriteLine("Connecting to kafka queue");
-                _topic = "storm_troper";
-                var options = new KafkaOptions(
-                    new Uri("http://kafkaBroker5:9092"),
-                    new Uri("http://kafkaBroker6:9092"),
-                    new Uri("http://kafkaBroker7:9092"),
-                    new Uri("http://kafkaBroker8:9092")
-                );
+                _topic = ConfigurationManager.AppSettings["topic"];
+                var brokers = from x in ConfigurationManager.AppSettings["kafkaBrokers"].Split(',')
+                              select new Uri(x);
+                Console.WriteLine("Connecting to kafka queue brokers {0} with topic {1}", string.Join(",", brokers), _topic);
+                var options = new KafkaOptions(brokers.ToArray());
                 var router = new BrokerRouter(options);
                 var coption = new ConsumerOptions(_topic, router);
                 _consumer = new KafkaNet.Consumer(coption);
