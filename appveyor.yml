@@ -8,19 +8,20 @@ branches:
 configuration: Release
 
 before_build:
-- cmd: nuget restore
+- cmd: nuget restore NLog.Kafka.IncludingDemoApps.sln
 build:
-  project: NLog.Kafka.sln
+  project: NLog.Kafka.IncludingDemoApps.sln
   publish_nuget: false
   publish_nuget_symbols: false
   include_nuget_references: false
   verbosity: normal
+  
 after_build:
 - nuget pack NLog.Targets.Kafka\NLog.Targets.Kafka.csproj 
 
 artifacts:
   # pushing all *.nupkg files in directory
-  path: '**/NLog.Targets.Kafka.*.nupkg'
+  path: 'NLog.Targets.Kafka.*.nupkg'
   name: mypackage
   
 deploy:
