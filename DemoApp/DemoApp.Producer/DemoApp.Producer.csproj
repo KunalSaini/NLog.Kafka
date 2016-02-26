@@ -34,8 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="kafka-net">
+      <HintPath>..\packages\kafka-net.0.9.0.65\lib\net45\kafka-net.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.4.2.3\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Targets.Kafka">
+      <HintPath>..\packages\NLog.Targets.Kafka.1.0.1-rc\lib\net45\NLog.Targets.Kafka.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
